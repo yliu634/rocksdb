@@ -590,7 +590,8 @@ TOOLS = \
 	rocksdb_dump \
 	rocksdb_undump \
 	blob_dump \
-	trace_analyzer \
+	trace_analyzer 
+	
 
 TEST_LIBS = \
 	librocksdb_env_basic_test.a
@@ -705,6 +706,7 @@ tools_lib: $(TOOLS_LIBRARY)
 test_libs: $(TEST_LIBS)
 
 dbg: $(LIBRARY) $(BENCHMARKS) tools $(TESTS)
+
 
 # creates static library and programs
 release:
@@ -1051,7 +1053,7 @@ clean:
 	$(FIND) . -name "*.[oda]" -exec rm -f {} \;
 	$(FIND) . -type f -regex ".*\.\(\(gcda\)\|\(gcno\)\)" -exec rm {} \;
 	rm -rf bzip2* snappy* zlib* lz4* zstd*
-	cd java; $(MAKE) clean
+#	cd java; $(MAKE) clean
 
 tags:
 	ctags -R .
@@ -1611,6 +1613,8 @@ install: install-static
 # ---------------------------------------------------------------------------
 # Jni stuff
 # ---------------------------------------------------------------------------
+JAVA_CONDITION := false
+ifeq ($(JAVA_CONDITION), true) 
 
 JAVA_INCLUDE = -I$(JAVA_HOME)/include/ -I$(JAVA_HOME)/include/linux
 ifeq ($(PLATFORM), OS_SOLARIS)
@@ -1908,6 +1912,8 @@ commit_prereq: build_tools/rocksdb-lego-determinator \
                build_tools/precommit_checker.py
 	J=$(J) build_tools/precommit_checker.py unit unit_481 clang_unit release release_481 clang_release tsan asan ubsan lite unit_non_shm
 	$(MAKE) clean && $(MAKE) jclean && $(MAKE) rocksdbjava;
+
+endif
 
 # ---------------------------------------------------------------------------
 #  	Platform-specific compilation

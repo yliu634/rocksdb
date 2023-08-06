@@ -216,7 +216,7 @@ class InternalStats {
       }
     }
 
-    explicit CompactionStats(const CompactionStats& c)
+    /*explicit CompactionStats(const CompactionStats& c)
         : micros(c.micros),
           cpu_micros(c.cpu_micros),
           bytes_read_non_output_levels(c.bytes_read_non_output_levels),
@@ -234,7 +234,7 @@ class InternalStats {
       for (int i = 0; i < num_of_reasons; i++) {
         counts[i] = c.counts[i];
       }
-    }
+    }*/
 
     void Clear() {
       this->micros = 0;
